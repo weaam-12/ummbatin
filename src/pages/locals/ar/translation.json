@@ -1,0 +1,33 @@
+{
+  "homeTitle": "مرحبًا بك في خدماتنا",
+  "homeDescription": "إدارة الشكاوى والمدفوعات والنماذج وخدمات الطوارئ.",
+  "aboutTitle": "عن المستوطنة",
+  "aboutDescription": "معلومات تاريخية والخدمات المقدمة للسكان.",
+  "complaintsTitle": "تقديم شكوى",
+  "complaintsDescription": "الإبلاغ عن مشكلات مثل جمع القمامة أو غيرها.",
+  "emergencyTitle": "جهات الاتصال في حالات الطوارئ",
+  "emergencyDescription": "اتصل بالشرطة، الإطفاء، الإسعاف والخدمات الطارئة الأخرى عند الحاجة.",
+  "checkoutTitle": "إتمام الدفع",
+  "paymentButton": "ادفع الآن",
+  "creditCardPaymentTitle": "دفع ببطاقة الائتمان",
+  "loginButton": "تسجيل الدخول",
+
+  "home": "الرئيسية",
+  "login": "تسجيل الدخول",
+
+  "ourServices": "خدماتنا",
+  "complaints": "شكاوى",
+  "payments": "مدفوعات",
+  "paymentsDescription": "ادفع المدفوعات عبر الإنترنت.",
+  "forms": "نماذج",
+  "formsDescription": "املأ النماذج المختلفة عبر الإنترنت.",
+  "emergency": "طوارئ",
+  "about": "من نحن",
+  "serviceTitle": "خدمة جمع النفايات",
+  "serviceDescription": "تحقق من خدمات جمع النفايات في منطقتك.",
+  "serviceHistory": "سجل الخدمة",
+  "noRecords": "لا توجد سجلات خدمة متاحة",
+  "user": "المستخدم",
+  "date": "التاريخ",
+  "status": "الحالة"
+}
