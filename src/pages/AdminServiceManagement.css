@@ -21,3 +21,14 @@ button {
     padding: 5px 10px;
     cursor: pointer;
 }
+.status-completed {
+    color: green;
+    font-weight: bold;
+}
+.status-inprogress {
+    color: orange;
+}
+.status-pending {
+    color: gray;
+}
+

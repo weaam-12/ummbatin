@@ -1,16 +1,10 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
 
 const HeroSection = () => {
-    const { t } = useTranslation();
-
     return (
         <section className="hero-section">
-            <h1>{t("homeTitle")}</h1>
-            <p>{t("homeDescription")}</p>
-            <NavLink to="/services" className="cta-button">
-            </NavLink>
+            <h1>ברוכים הבאים לאתר הכפר שלכם</h1>
+            <p>הישארו מחוברים לשירותים, עדכונים ועוד.</p>
         </section>
     );
 };

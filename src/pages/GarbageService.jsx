@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { submitServiceRequest, fetchServiceHistory } from "../api";
+
 import Form from "../pages/Forms.jsx";
-import "./GarbageService.css";  // Importing specific styles for this component
+import "./GarbageComplaint.css";  // Importing specific styles for this component
 
 const GarbageService = () => {
     const { t } = useTranslation();

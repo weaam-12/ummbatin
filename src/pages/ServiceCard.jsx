@@ -1,12 +1,18 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ServiceCard = ({ to, title, description }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(to);
+    };
+
     return (
-        <NavLink to={to} className="service-card">
+        <div className="service-card" onClick={handleClick} style={{ cursor: "pointer" }}>
             <h3>{title}</h3>
             <p>{description}</p>
-        </NavLink>
+        </div>
     );
 };
 

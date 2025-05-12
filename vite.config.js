@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  base:"/Ummbatin-Website",
   server: {
-    https: false, // Disable HTTPS
-    port: 5173
+    port: 5173,
+  strictPort: true // ❗️If 5173 is taken, Vite will throw an error instead of switching
   }
 })

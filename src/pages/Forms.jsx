@@ -1,62 +1,74 @@
-import React, { useState, useEffect, useMemo } from "react";
+// src/Forms.jsx
+import React, { useState } from "react";
 
-const Forms = ({ fields = [], onSubmit, formTitle = "טופס", loading = false, submitButtonText = "שלח" }) => {
-    // Create initial state dynamically based on fields
-    const initialFormData = useMemo(() => {
-        return fields.reduce((acc, field) => {
-            acc[field.name] = field.initialValue || "";
-            return acc;
-        }, {});
-    }, [JSON.stringify(fields)]); // Ensures proper updates
-
-    const [formData, setFormData] = useState(initialFormData);
-
-    // Reset formData when fields change
-    useEffect(() => {
-        setFormData(initialFormData);
-    }, [initialFormData]);
+const Form = ({ fields, onSubmit, loading, submitButtonText }) => {
+    const [formData, setFormData] = useState({});
+    const [fieldErrors, setFieldErrors] = useState({});
 
     const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: type === "file" ? files[0] : value, // Handle file uploads
-        }));
+        const { name, value } = e.target;
+        setFormData((prevState) => ({ ...prevState, [name]: value }));
+        setFieldErrors((prevState) => ({ ...prevState, [name]: "" })); // Clear error on change
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData);
+
+        // Validate form before submit
+        let errors = {};
+        fields.forEach((field) => {
+            if (field.required && !formData[field.name]) {
+                errors[field.name] = "This field is required";
+            }
+        });
+
+        if (Object.keys(errors).length > 0) {
+            setFieldErrors(errors); // Show validation errors
+        } else {
+            onSubmit(formData); // Call the onSubmit prop
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit} dir="rtl">
-            <h2>{formTitle}</h2>
-            {fields.length > 0 ? (
-                fields.map((field) => (
-                    <div key={field.name} className="form-field">
-                        <label>{field.label}</label>
-                        {field.type === "select" ? (
-                            <select name={field.name} value={formData[field.name]} onChange={handleChange} required={field.required}>
-                                {field.options?.map((option) => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </select>
-                        ) : field.type === "file" ? (
-                            <input type="file" name={field.name} onChange={handleChange} required={field.required} />
-                        ) : (
-                            <input type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} required={field.required} />
-                        )}
-                    </div>
-                ))
-            ) : (
-                <p>⚠️ אין שדות בטופס!</p>
-            )}
-            <button type="submit" disabled={loading}>{loading ? "שולח..." : submitButtonText}</button>
+        <form onSubmit={handleSubmit}>
+            {fields.map((field) => (
+                <div key={field.name} className="form-group">
+                    <label htmlFor={field.name}>{field.label}</label>
+                    {field.type === "select" ? (
+                        <select
+                            id={field.name}
+                            name={field.name}
+                            value={formData[field.name] || ""}
+                            onChange={handleChange}
+                        >
+                            <option value="">Select...</option>
+                            {field.options.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
+                        <input
+                            id={field.name}
+                            name={field.name}
+                            type={field.type}
+                            value={formData[field.name] || ""}
+                            onChange={handleChange}
+                        />
+                    )}
+
+                    {fieldErrors[field.name] && (
+                        <span className="error">{fieldErrors[field.name]}</span>
+                    )}
+                </div>
+            ))}
+
+            <button type="submit" disabled={loading}>
+                {loading ? "Submitting..." : submitButtonText}
+            </button>
         </form>
     );
 };
 
-export default Forms;
+export default Form;

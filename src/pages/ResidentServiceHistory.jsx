@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { fetchServiceHistory } from "../api"; // Assuming API is set up for this
-import "./GarbageService.css";
+import "./GarbageComplaint.css";
 
 const ResidentServiceHistory = ({ userId }) => {
     const { t } = useTranslation();
@@ -10,7 +10,6 @@ const ResidentServiceHistory = ({ userId }) => {
     useEffect(() => {
         const fetchHistory = async () => {
             try {
-                // Fetch all service history, but filter it on the resident side
                 const history = await fetchServiceHistory();
                 const filteredHistory = history.filter(
                     (request) => request.userId === userId
@@ -24,12 +23,12 @@ const ResidentServiceHistory = ({ userId }) => {
     }, [userId]);
 
     return (
-        <div className="garbage-service-page">
-            <h1>{t("serviceHistory")}</h1>
+        <div className="max-w-3xl mx-auto p-6">
+            <h1 className="text-2xl font-bold mb-6">{t("serviceHistory")}</h1>
             {serviceHistory.length > 0 ? (
                 <ul>
                     {serviceHistory.map((request, index) => (
-                        <li key={index}>
+                        <li key={index} className="bg-gray-100 p-4 rounded-md mb-4">
                             <p><strong>{t("serviceType")}:</strong> {request.serviceType}</p>
                             <p><strong>{t("status")}:</strong> {request.status}</p>
                             <p><strong>{t("date")}:</strong> {new Date(request.date).toLocaleDateString()}</p>
@@ -37,7 +36,7 @@ const ResidentServiceHistory = ({ userId }) => {
                     ))}
                 </ul>
             ) : (
-                <p>{t("noRequests")}</p>
+                <p className="text-gray-500">{t("noRequests")}</p>
             )}
         </div>
     );

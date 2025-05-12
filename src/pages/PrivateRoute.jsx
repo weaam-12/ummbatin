@@ -1,11 +1,17 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../AuthContext"; // Ensure you have AuthContext to track user authentication
+import { useAuth } from "../AuthContext";
 
-const PrivateRoute = ({ element }) => {
-    const { user } = useAuth(); // Get user authentication status
+const PrivateRoute = ({ children }) => {
+    const { user } = useAuth(); // Access user from context
 
-    return user && user.role === "admin" ? element : <Navigate to="/login" />;
+    // If there is no user (i.e., not authenticated), redirect to login
+    if (!user) {
+        return <Navigate to="/login" />;
+    }
+
+    // Otherwise, render the protected component
+    return children;
 };
 
 export default PrivateRoute;

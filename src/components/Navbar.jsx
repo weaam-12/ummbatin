@@ -1,46 +1,80 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { FaBars, FaTimes, FaUserCircle, FaSearch } from "react-icons/fa";
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    // Function to change language
+    const changeLanguage = (lang) => {
+        i18n.changeLanguage(lang);
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
     return (
         <nav className="navbar">
             <div className="navbar-container">
-                {/* Logo or Brand Name */}
+                {/* Brand Logo */}
                 <NavLink to="/" className="navbar-brand">
                     {t("siteName")}
                 </NavLink>
 
-                {/* Navigation Links */}
-                <div className="navbar-links">
-                    <NavLink to="/" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                        {t("home")}
-                    </NavLink>
-                    <NavLink to="/login" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                        {t("login")}
-                    </NavLink>
-                    <NavLink to="/complaints" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                        {t("complaints")}
-                    </NavLink>
-                    <NavLink to="/payments" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                        {t("payments")}
-                    </NavLink>
-                    <NavLink to="/forms" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                        {t("forms")}
-                    </NavLink>
-                    <NavLink to="/emergency" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                        {t("emergency")}
-                    </NavLink>
-                    <NavLink to="/about" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                        {t("about")}
-                    </NavLink>
-                    <NavLink to="/garbage-service" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                        {t("garbageService")}
-                    </NavLink>
+                {/* Responsive Menu Icon */}
+                <div className="menu-icon" onClick={toggleMenu}>
+                    {menuOpen ? <FaTimes /> : <FaBars />}
+                </div>
 
+                {/* Navigation Links */}
+                <ul className={`navbar-links ${menuOpen ? "active" : ""}`}>
+                    <li>
+                        <NavLink to="/" onClick={toggleMenu}>{t("home")}</NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to="/complaints" onClick={toggleMenu}>{t("complaints")}</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/payments" onClick={toggleMenu}>{t("payments")}</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/forms" onClick={toggleMenu}>{t("forms")}</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/emergency" onClick={toggleMenu}>{t("emergency")}</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/about" onClick={toggleMenu}>{t("about")}</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/garbage-complaint" onClick={toggleMenu}>{t("garbageService")}</NavLink>
+                    </li>
+                </ul>
+
+                {/* Right Side: Search, Language, Profile */}
+                <div className="navbar-right">
+                    {/* Search Bar */}
+                    <div className="search-bar">
+                        <input type="text" placeholder={t("search")} />
+                        <FaSearch />
+                    </div>
+
+                    {/* Language Selector */}
+                    <div className="language-selector">
+                        <button onClick={() => changeLanguage("he")}>HE</button>
+                        <button onClick={() => changeLanguage("ar")}>AR</button>
+                    </div>
+
+                    {/* User Profile */}
+                    <div className="profile-menu">
+                        <FaUserCircle size={24} onClick={() => navigate("/login")} />
+                    </div>
                 </div>
             </div>
         </nav>
